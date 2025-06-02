@@ -540,7 +540,7 @@
                 $scope.getFormattedProducts = function () {
                     //eval("['1','Test Desc','1','₹ 60,000','','₹ 60,000']");
                     var formatString = "";
-                    debugger;
+                    //debugger;
                     for (var i = 0; i < $scope.products.length; i++) {
                         formatString += "[" + $scope.products[i].no + ",'" + $scope.products[i].name + "','" + $scope.products[i].hsncode + "'," + $scope.products[i].quantity + ",'" + $scope.formatNumberNF($scope.products[i].rate) + "','" + $scope.formatNumber((($scope.products[i].cgstPer / 100) * $scope.products[i].rateQuantity)+(($scope.products[i].sgstPer / 100) * $scope.products[i].rateQuantity))+ "','" + $scope.formatNumberGT($scope.products[i].total) + "']" + (i == $scope.products.length-1 ? "" : "$$$");
                     }
@@ -640,7 +640,7 @@
                     var test = arayObj.split('$$$');
                     var test1 =[];
                     //var test2 = [];
-                    debugger;
+                    //debugger;
                                             
                     
                     for (var i = 0; i < test.length; i++) {
@@ -648,7 +648,9 @@
                     }
                     if(test.length < 10){
                         for (var i = 0; i < 10-(test.length); i++) {// left, top, right, bottom
-                         test1.push(eval("[{ text: '', colSpan: 7, border: [true, false, true, false]},'','','','','','']"));
+                            //test1.push(eval("[{ text: '', colSpan: 7, border: [true, true, true, true]},'','','','','','']"));
+                            //test1.push(eval("['','','','','','','']"));
+                            test1.push(eval("[{ text: '', border: [true, false, true, false]},{ text: '', border: [true, false, true, false]},{ text: '', border: [true, false, true, false]},{ text: '', border: [true, false, true, false]},{ text: '', border: [true, false, true, false]},{ text: '', border: [true, false, true, false]},{ text: '', border: [true, false, true, false]}]"));
                         }
                     }
                     
