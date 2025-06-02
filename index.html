@@ -639,11 +639,18 @@
                     var arayObj = $scope.getFormattedProducts();
                     var test = arayObj.split('$$$');
                     var test1 =[];
+                    //var test2 = [];
                     debugger;
+                                            
+                    
                     for (var i = 0; i < test.length; i++) {
                         test1.push(eval(test[i]));
                     }
-                    //var test3 = test1[0] + ',' + test1[1]
+                    if(test.length < 10){
+                        for (var i = 0; i < 10-(test.length); i++) {// left, top, right, bottom
+                         test1.push(eval("[{ text: '', colSpan: 7, border: [true, false, true, false]},'','','','','','']"));
+                        }
+                    }
                     
                     var dd = {
                         content: [
@@ -782,36 +789,14 @@
                                             {text:'HSN Code',bold:true},
                                             {text:'Quantity',bold:true},
                                             {text:'Rate',bold:true},
-					                        //{text:'Basic Amount',bold:true},
                                             {text:'Tax',bold:true},
                                             {text:'Amount',bold:true},
                                         ],
                                         //eval("['1','Test Desc','1','₹ 60,000','','₹ 60,000']"),
                                         //$scope.getFormattedProducts(),
                                         //test3,
-                                        <!-- [ -->
-                                            <!-- { -->
-                                                <!-- colSpan: 2, -->
-                                                <!-- text: 'Total', -->
-                                                <!-- alignment: 'right' -->
-                                            <!-- }, -->
-                                            <!-- '', -->
-                                            <!-- { -->
-                                                <!-- colSpan: 5, -->
-                                                <!-- text: $scope.formatNumberGT($scope.getGrandTotal()), -->
-                                                <!-- alignment: 'right', -->
-                                                <!-- bold: true -->
-                                            <!-- }, -->
-                                            <!-- '', -->
-                                            <!-- '', -->
-                                            <!-- '', -->
-                                            <!-- '', -->
-                                        <!-- ], -->
-										[
-											//{ text: "", border: [true, false, false, true] },
-                                            //{ text: "", border: [false, false, false, true] },
-                                            //{ text: "", border: [false, false, false, true] },
-                                            {
+                                        [
+											{
                                                 text: 'Round off: ' + $scope.formatNumberGT($scope.roundOff ? $scope.roundOff : 0.00) + '\n'
                                                 + $scope.getTaxTotal(),
                                                 alignment: 'right',
@@ -824,34 +809,9 @@
                                             '',
                                             '',
                                             '',
-                                            // {
-                                            //     text: $scope.formatNumberGT($scope.roundOff ? $scope.roundOff : 0.00),
-                                            //     alignment: 'left',
-                                            //     //bold: true
-                                            //     colSpan: 2,
-                                            // },
                                             ''
                                         ],
-                                        // [
-										// 	{ text: "", border: [true, false, false, true] },
-                                        //     { text: "", border: [false, false, false, true] },
-                                        //     {
-                                        //         text: 'Tax: ' + $scope.getTaxTotal(),
-                                        //         alignment: 'right',
-										// 		colSpan: 3,
-										// 		border: [false, true, true, true]
-                                        //     },
-                                        //     '',
-										// 	'',
-                                        //     {
-                                        //         text: 'Total: ' + $scope.formatNumberGT($scope.getGrandTotal()),
-                                        //         alignment: 'left',
-										// 		colSpan: 2,
-                                        //         bold: true
-                                        //     },
-                                        //     ''
-                                        // ],
-										[
+                                        [
                                             {
                                                 colSpan: 5,
                                                 fontSize: 10,
@@ -875,32 +835,11 @@
                                         ],
 										[
                                             {
-                                                colSpan: 7,												
+                                                colSpan: 4,												
                                                 fontSize: 10,
 												alignment :'justify',
-                                                border: [true, false, true, false],
+                                                border: [true, false, true, true], // left, top, right, bottom
                                                 text: "Payment Details:-\nBank             : " + ($scope.user.bank ? $scope.user.bank : '') + "\nAccount No.: " + ($scope.user.AccountNo ? $scope.user.AccountNo : '') + "\nIFSC Code   : " + ($scope.user.IFSCCODE ? $scope.user.IFSCCODE : ''),
-                                            },
-                                            "",
-                                            "",
-                                            "",
-                                            "",
-                                            "",
-                                            ""
-                                            // { text: "", border: [false, false, false, false] },
-                                            // { text: "", border: [false, false, false, false] },
-                                            // { text: "", border: [false, false, false, false] },
-                                            // { text: "", border: [false, false, false, false] },
-                                            // { text: "", border: [false, false, false, false] },
-                                            // { text: "", border: [false, false, true, false] }
-                                        ],
-                                        [
-                                            {
-                                                colSpan: 4,
-												fontSize: 9,
-												alignment :'justify',
-                                                text: "\n\nDeclaration:\nWe declare that this invoice shows the actual price of the goods described and that all particulars are true and correct.",
-                                                border: [true, false, false, true]
                                             },
                                             "",
                                             "",
@@ -910,13 +849,16 @@
                                                 bold: true,
                                                 alignment: 'right',
                                                 text: "for " + ($scope.user.sellerName ? $scope.user.sellerName : '') +"\n\n\nAuthorized Signatury",
-                                                border: [true, true, true, true]
-                                            }
+                                                border: [true, true, true, true] // left, top, right, bottom
+                                            },
+                                            "",
+                                            ""
                                         ]
                                     ]
                                 }
                             },
-                            { text: 'This is computer generated tax invoice.', style: 'subheader' },
+                            { text: 'Declaration: We declare that this invoice shows the actual price of the goods described & all particulars are true and correct.', style: 'note' },
+                            { text: 'This is computer generated tax invoice.', style: 'subheader' }
                         ],
                         styles: {
                             header: {
@@ -924,8 +866,14 @@
                                 bold: true,
                                 margin: [0, 0, 0, 10]
                             },
+                            note: {
+                                fontSize: 9,
+                                bold: false,
+                                margin: [0, 0, 0, 0],
+                                alignment: 'center'
+                            },
                             subheader: {
-                                fontSize: 12,
+                                fontSize: 10,
                                 bold: true,
                                 margin: [0, 5, 0, 5],
                                 alignment: 'center'
@@ -976,6 +924,9 @@
                     if (test1.length > 0) {
                         [].splice.apply(c1, [8, 0].concat(test1));
                     }
+                    // if (test2.length > 0) {
+                    //     [].splice.apply(c1, [11, 0].concat(test2));
+                    // }
                     dd.content[1].table.body = c1;
 
                     var date = moment().format('DD-MM-YYYY_HH:MM:SS');
